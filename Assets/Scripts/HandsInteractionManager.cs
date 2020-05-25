@@ -5,6 +5,7 @@ using UnityEngine;
 public class HandsInteractionManager : MonoBehaviour
 {
     private OVRHand hand;
+    private OVRCustomSkeleton skeleton;
     private string currentHand;
 
     // Gameobject used as dart in current hand
@@ -17,12 +18,13 @@ public class HandsInteractionManager : MonoBehaviour
     void Start()
     {
         hand = gameObject.GetComponent<OVRHand>();
+        skeleton = gameObject.GetComponent<OVRCustomSkeleton>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        LoadHandDart();
+
     }
 
     void FixedUpdate()
@@ -30,7 +32,7 @@ public class HandsInteractionManager : MonoBehaviour
         // if hand tracking is reliable and index finger is pinched. Display dart
         if (isHandTrackingReliable())
         {
-
+            LoadHandDart();
         }
         // upon releasing pinch, add gravity and 
     }
@@ -49,6 +51,10 @@ public class HandsInteractionManager : MonoBehaviour
     {
         bool isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         float ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
+      
+
+        // Cache the position near thumb to immitate where a dart is normally held
+        Vector3 dartPo;
 
         if (isIndexFingerPinching
             && ringFingerPinchStrength > 0.7f)
