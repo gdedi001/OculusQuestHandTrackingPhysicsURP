@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1822594395}
   m_IndirectSpecularColor: {r: 0.44049034, g: 0.48909646, b: 0.5692491, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -5018,8 +5018,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d710ddff7b73b4fbf9d77d094602eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dart: {fileID: 0}
+  boneToTrack: {fileID: 0}
   minFingerPinchStrength: 0.5
+  Dart: {fileID: 0}
 --- !u!4 &321410192
 Transform:
   m_ObjectHideFlags: 0
@@ -5032,7 +5033,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &328582813
 GameObject:
@@ -9134,6 +9135,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 562992400}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &563364923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1055909473010358, guid: c6a74181d4000004887343fb87b3c53a,
+    type: 3}
+  m_PrefabInstance: {fileID: 584840978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &566149718
 GameObject:
   m_ObjectHideFlags: 0
@@ -9429,8 +9436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d710ddff7b73b4fbf9d77d094602eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boneToTrack: {fileID: 563364923}
+  minFingerPinchStrength: 0.7
   Dart: {fileID: 1940858299}
-  minFingerPinchStrength: 0.5
 --- !u!1 &596410726
 GameObject:
   m_ObjectHideFlags: 0
@@ -27856,8 +27864,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 67.537, y: 225.939, z: 308.55}
+--- !u!1 &1827987617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1109363208795868, guid: e201a24a09e942042b93390d0444d728,
+    type: 3}
+  m_PrefabInstance: {fileID: 1992746758}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1843173576
 GameObject:
   m_ObjectHideFlags: 0
@@ -30729,8 +30743,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d710ddff7b73b4fbf9d77d094602eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boneToTrack: {fileID: 1827987617}
+  minFingerPinchStrength: 0.7
   Dart: {fileID: 581207822}
-  minFingerPinchStrength: 0.5
 --- !u!1 &1995711434
 GameObject:
   m_ObjectHideFlags: 0

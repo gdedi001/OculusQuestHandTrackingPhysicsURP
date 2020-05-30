@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class HandsInteractionManager : MonoBehaviour
 {
-    private OVRHand hand;
-    private OVRCustomSkeleton skeleton;
-    private string currentHand;
+    private OVRHand ovrHand;
+    private OVRCustomSkeleton ovrSkeleton;
+    [SerializeField]
+    private GameObject boneToTrack;
+
+    [SerializeField]
+    private float minFingerPinchStrength = 0.7f;
 
     // Gameobject used as dart in current hand
     public GameObject Dart;
+    private bool dartLoaded;
 
-    [SerializeField]
-    private float minFingerPinchStrength = 0.5f;
+    void Awake()
+    {
+        ovrHand = gameObject.GetComponent<OVRHand>();
+        ovrSkeleton = gameObject.GetComponent<OVRCustomSkeleton>();
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        hand = gameObject.GetComponent<OVRHand>();
-        skeleton = gameObject.GetComponent<OVRCustomSkeleton>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        Debug.Log(boneToTrack);  
     }
 
     void FixedUpdate()
@@ -32,40 +34,50 @@ public class HandsInteractionManager : MonoBehaviour
         // if hand tracking is reliable and index finger is pinched. Display dart
         if (isHandTrackingReliable())
         {
-            LoadHandDart();
+            if (isPinching())
+                loadHandDart();
+            else
+                removeHandDart();
         }
         // upon releasing pinch, add gravity and 
     }
 
     private bool isHandTrackingReliable()
     {
-        OVRHand.TrackingConfidence confidence = hand.GetFingerConfidence(OVRHand.HandFinger.Index);
+        OVRHand.TrackingConfidence indexConfidence = ovrHand.GetFingerConfidence(OVRHand.HandFinger.Index);
+        OVRHand.TrackingConfidence thumbConfidence = ovrHand.GetFingerConfidence(OVRHand.HandFinger.Thumb);
 
-        if (confidence == OVRHand.TrackingConfidence.High)
+        if (indexConfidence == OVRHand.TrackingConfidence.High && thumbConfidence == OVRHand.TrackingConfidence.High)
             return true;
         else
             return false;
     }
 
-    private void LoadHandDart()
+    private bool isPinching()
     {
-        bool isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
-        float ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
-      
-
-        // Cache the position near thumb to immitate where a dart is normally held
-        Vector3 dartPo;
+        bool isIndexFingerPinching = ovrHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        float ringFingerPinchStrength = ovrHand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
 
         if (isIndexFingerPinching
-            && ringFingerPinchStrength > 0.7f)
-        {
-            Debug.Log("!!! Dart Active");
-            Dart.SetActive(true);
-        }
+            && ringFingerPinchStrength >= minFingerPinchStrength)
+            return true;
         else
-        {
-            Dart.SetActive(false);
-            Debug.Log("??? Dart De-Activated");
-        }
+            return false;
+    }
+
+    private void loadHandDart()
+    {
+        // place dart at bone we are tracking (thumb)
+        Dart.transform.position = boneToTrack.transform.position;
+        Dart.SetActive(true);
+        dartLoaded = true;
+        Debug.Log("!!! DART LOADED");
+    }
+
+    private void removeHandDart()
+    {
+        Dart.SetActive(false);
+        dartLoaded = false;
+        Debug.Log("??? DART REMOVED");
     }
 }
